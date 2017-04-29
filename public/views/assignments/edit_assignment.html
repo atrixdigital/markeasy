@@ -1,0 +1,227 @@
+<div class="jumbotron" layout-margin>
+    <!--the top of the page will contain the name of the assignment and a relevant icon-->
+    <div class="row">
+        <div class="headerStyleLight">
+            <img src="../../img/folder.png"/>
+            {{assignmentName}}
+            <span></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hr2"></div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-lg-8 background-blue-light">
+
+            <!--Assignment presentation Start-->
+            <div class="text-center">
+                <h2>{{assignmentName}}</h2> <br>
+            </div>
+
+            <div class="headerComment" style="display: inline-block;   min-width: 160px;"> Assignment:</div>
+            <div class="bigText"> {{assignmentName}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.namePhase();">
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Description:</div>
+            <div class="bigText"> {{description}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.descriptionPhase();">
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Created By:</div>
+            <div class="bigText"> {{createdBy}}</div>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Created at:</div>
+            <div class="bigText"> {{dateCreated | date:'medium'}}</div>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Due Date:</div>
+            <div class="bigText"> {{dueDate | date:'medium'}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.dueDatePhase();">
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Progress:</div>
+            <div class="bigText"> {{progressPercentage}} %</div>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Examiners:</div>
+
+            <span ng-repeat="examiner in assignmentExaminers">
+                {{examiner}} &nbsp;|&nbsp;
+            </span>
+            <hr class="hr2"/>
+
+
+            <div class="text-center">Standard Errors derived from that assignment:</div>
+
+            <table id="tr-animation" class="table table-bordered table-inverse table-hover">
+                <thead class="thead-inverse thead-green  ">
+                <tr>
+                    <th>#</th>
+                    <th>Error Name</th>
+                    <th>Created By</th>
+                    <th>Grade Impact</th>
+                    <th>Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="error in errors | pagination: (currentPage - 1) * pageSize | limitTo: pageSize  track by $index">
+                    <td class="text-center"> {{$index +1 }}</td>
+                    <td>{{error.error_name}}</td>
+                    <td>{{error.created_by}}</td>
+                    <td>{{error.grade_impact}}</td>
+                    <td>
+                        <a href="/editError/{{error._id}}">
+                            <button type="button" class="btn btn-primary btn-block">Edit
+                            </button>
+                        </a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-lg-2">
+
+                </div>
+                <div class="col-lg-8">
+                    <!--show success message when needed-->
+                    <div class="row show-hide-message" ng-show="edit.successMsg">
+                        <div class="alert alert-success">
+                            <img src="../../img/check-box-standard-error.png"/>
+                            {{ edit.successMsg }}</div>
+                    </div>
+                    <br>
+
+                    <!--show error message when needed-->
+                    <div class="row show-hide-message" ng-show="edit.errorMsg">
+                        <div class="alert alert-danger">{{ edit.errorMsg }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-lg-6 pull-left">
+                    <ul uib-pagination total-items=errors.length items-per-page="pageSize" ng-model="currentPage"></ul>
+                </div>
+                <div class="col-lg-6 pull-right">
+                    <button class="btn btn-success pull-right" ng-click="showAdvanced($event)">
+                        ADD ERROR
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-lg-4 background-editing-box sample-show-hide" ng-show="edit.showEditingWindow">
+            <!--start of editing capabilities box-->
+            <div class="text-center">
+                <img src="../../img/writing.png" style="max-width: 150px; padding:10px;"/>
+            </div>
+
+            <div class="row">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Name</a></li>
+                    <li role="presentation" ng-click="edit.dueDatePhase();" ng-class="dueDateTab"><a href="#">Due Date</a></li>
+                    <li role="presentation" ng-click="edit.descriptionPhase();" ng-class="descriptionTab"><a href="#">Description</a></li>
+                    <li role="presentation" ng-click="edit.permissionPhase();" ng-class="permissionTab"><a href="#">Permission</a>
+                    </li>
+                </ul>
+
+            </div>
+
+
+            <!--phase one: edit the name of the assignment-->
+            <form name="edit.nameForm" ng-show="edit.phase1"
+                  ng-submit="edit.updateName(newName, edit.nameForm.name.$valid)" novalidate>
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" style="border-top-left-radius: 0px; " >enter new name:</div>
+                    <input type="text" class="form-control" placeholder="Name" name="name" ng-model="newName"
+                           ng-minlength="3" ng-maxlength="25" required>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+
+            <!--phase two: change assignment due date-->
+
+            <form name="edit.dueDateForm" ng-show="edit.phase2" ng-submit="edit.updateDueDate(newDueDate)">
+                <div class="row">
+                    <div class="headerStyleLight text-center" >  Current Due Date: <br> {{dueDate | date:'medium'}} </div>
+                    <div class="hr2"></div>
+                    <div class="text-center">
+                        <div class="bigText">
+                            Enter New Due Date:
+                        </div>
+                    </div>
+                    <div class="background-1">
+                        <md-input-container>
+                            <md-datepicker name="newDueDate" ng-model="newDueDate"></md-datepicker>
+                        </md-input-container>
+                    </div>
+
+                </div>
+                <div class="row">
+                        <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+            <!--phase two: change assignment description-->
+            <form name="edit.descriptionForm" ng-show="edit.phase3"
+                  ng-submit="edit.updateDescription(newDescription, edit.descriptionForm.desc.$valid)" novalidate>
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" style="border-top-left-radius: 0px;" >enter new description:</div>
+
+                    <textarea class="form-control feedback-input" rows="5"
+                              ng-model="newDescription" name="desc"></textarea>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+
+
+
+        <!--end of editing capabilities box-->
+        </div>
+
+
+        <div class="col-lg-4  text-center" ng-show="!edit.showEditingWindow" >
+            <div class="headerStyleLight"> Assignment Info</div>
+
+            <img src="../../img/folder.png" style="max-width: 256px;"/>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>

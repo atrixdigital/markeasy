@@ -1,0 +1,77 @@
+<div class="jumbotron">
+    <div class="headerStyle">
+        <img src="../../img/task.png"/>
+        submissions
+    </div>
+
+    <br>
+    Here you get link to submit assignments, as well as view users submissions for your relevant assignments
+    <br><br>
+    <br>
+
+    <div class="headerStyleLight">
+        <img src="../img/folder.png"/>
+        Submit Assignments
+    </div>
+    <div>
+        <!--iterate over all the relevant submissions of this user, give link to submit each and every one of them-->
+        <table id="tr-animation" class="table table-bordered table-inverse table-hover">
+            <thead class="thead-inverse thead-green  ">
+            <tr>
+                <th>index</th>
+                <th>Assignment ID</th>
+                <th>Submit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="assignment in relevant_assignments track by $index">
+                <td class="text-center"> {{$index +1 }}</td>
+                <td>{{assignment}}</td>
+                <td>
+                    <a href="submit_assignment/{{assignment}}">
+                        <button type="button" class="btn btn-primary btn-block">Submit Assignment
+                        </button>
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="headerStyleLight">
+        <img src="../img/folder.png"/>
+        View Submissions
+    </div>
+
+
+    <table id="tr-animation" class="table table-bordered table-inverse table-hover">
+        <thead class="thead-inverse thead-green  ">
+        <tr>
+            <th>index</th>
+            <th>Assignment ID</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="assignment in relevant_assignments track by $index">
+            <td class="text-center"> {{$index +1 }}</td>
+            <td>{{assignment}}</td>
+            <td>
+                <a href="check_submission/{{assignment}}">
+                    <button type="button" class="btn btn-warning btn-block">view submissions
+                    </button>
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    <br>
+
+
+</div>

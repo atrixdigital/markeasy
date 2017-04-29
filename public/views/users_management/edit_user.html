@@ -1,0 +1,189 @@
+<div class="jumbotron">
+    <div class="row">
+        <div class="headerStyleLight">
+            <img src="../../img/Edit-Male-User-icon.png"/>
+            {{newUsername}}
+            <span></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hr2"></div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-8 background-blue-light">
+            <!--Profile presentation Start-->
+            <div class="text-center">
+                <h2>{{newName}}</h2> <br>
+            </div>
+            <div class="headerComment" style="display: inline-block;   min-width: 160px;"> Username :</div>
+            <div class="bigText" > {{newUsername}} </div>
+            <button class="btn btn-danger pull-right" ng-click="edit.usernamePhase();" >
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Email: </div>
+            <div class="bigText" > {{newEmail}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.emailPhase();" >
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Name: </div>
+            <div class="bigText" > {{newName}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.namePhase();" >
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Joined at: </div>
+            <div class="bigText" > {{newDateCreated | date:'medium'}}   </div>  <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Access level: </div>
+            <div class="bigText" > {{newPermission}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.permissionPhase();" >
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="text-center" >Member of the following assignments:</div>
+
+
+            <table id="tr-animation" class="table table-bordered table-inverse table-hover">
+                <thead class="thead-inverse thead-green  ">
+                <tr>
+                    <th>#</th>
+                    <th>Assignment Name</th>
+                    <th>Status</th>
+                    <th>Role</th>
+                    <th>Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="assignment in relevantAssignments | pagination: (currentPage - 1) * pageSize |limitTo: pageSize  track by $index">
+                    <td class="text-center"> {{$index +1 }}</td>
+                    <td>{{assignment}}</td>
+                    <td>complete</td>
+                    <td>examiner</td>
+                    <td>
+                        <span class="bigText pull-right"> <a class="pull-right" href="/editAssignment/{{assignment}}">Edit<i class="fa fa-arrow-circle-right"></i></a> </span
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <ul uib-pagination total-items=relevantAssignments.length items-per-page="pageSize" ng-model="currentPage"></ul>
+
+        </div>
+
+        <div class="col-lg-4 background-editing-box sample-show-hide" ng-show="edit.showEditingWindow" >
+            <div class="text-center">
+                <img src="../../img/writing.png" style="max-width: 150px; padding:10px;"/>
+            </div>
+            <!--editing capabilities begin-->
+
+            <div class="row">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Full Name</a></li>
+                    <li role="presentation" ng-click="edit.usernamePhase();" ng-class="usernameTab"><a
+                            href="#">UserName</a></li>
+                    <li role="presentation" ng-click="edit.emailPhase();" ng-class="emailTab"><a href="#">Email</a></li>
+                    <li role="presentation" ng-click="edit.permissionPhase();" ng-class="permissionTab"><a href="#">Permission</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--phase one: name-->
+
+            <form name="edit.nameForm" ng-show="edit.phase1"
+                  ng-submit="edit.updateName(newName, edit.nameForm.name.$valid)" novalidate>
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" style="border-top-left-radius: 0px; " >enter new name:</div>
+                    <input type="text" class="form-control" placeholder="Name" name="name" ng-model="newName"
+                           ng-minlength="3" ng-maxlength="25" required>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+            <form name="edit.emailForm" ng-show="edit.phase3"
+                  ng-submit="edit.updateEmail(newEmail, edit.emailForm.email.$valid)">
+
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" > enter new email: </div>
+                    <input type="email" class="form-control" placeholder="Email" name="email" ng-model="newEmail"
+                           ng-minlength="3" ng-maxlength="35" required>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+            <form name="edit.usernameForm" ng-show="edit.phase2"
+                  ng-submit="edit.updateUsername(newUsername, edit.usernameForm.username.$valid)">
+
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center">enter new username</div>
+                    <input type="text" class="form-control" placeholder="Username" name="username"
+                           ng-model="newUsername"
+                           ng-minlength="3" ng-maxlength="25" required>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+            <div ng-show="edit.phase4" class="text-center">
+                <div class="form-group row">
+                <div class="headerStyleLight" > edit user permission </div>
+
+                <button type="button" class="btn btn-success" ng-click="edit.updatePermissions('user')">User</button>
+                <button type="button" class="btn btn-info" ng-click="edit.updatePermissions('moderator')">Moderator
+                </button>
+                <button type="button" class="btn btn-warning" ng-click="edit.updatePermissions('admin')">Admin</button>
+                <br>
+                <div class="headerComment">  Current Permission: &nbsp;&nbsp; {{newPermission}} </div>
+                </div>
+            </div>
+
+            <div class="row show-hide-message" ng-show="edit.successMsg">
+                <div class="alert alert-success"> {{ edit.successMsg }}</div>
+            </div>
+            <br>
+            <div class="row show-hide-message" ng-show="edit.errorMsg">
+                <div class="alert alert-danger">{{ edit.errorMsg }}</div>
+            </div>
+
+            <!--editing capabilities end-->
+
+            <div class="row text-center">
+                <button type="button"
+                        ng-show="edit.deleteAccess"
+                        class="btn btn-danger btn-lg"
+                        ng-click="edit.showConfirm(newUsername);"
+                        >
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+
+                    Delete user
+                </button>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4  text-center" ng-show="!edit.showEditingWindow" >
+            <div class="headerStyleLight"> User Profile</div>
+
+            <img src="../../img/Edit-Male-User-icon.png"/>
+
+        </div>
+        </div>
+
+
+</div>

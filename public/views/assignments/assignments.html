@@ -1,0 +1,143 @@
+<div class="jumbotron">
+    <div class="headerStyle">
+        <hr class="hr2"/>
+        <img src="../img/assignment.png"/>
+        Assignments
+
+        <hr class="hr2"/>
+    </div>
+    <br>
+    <!-- Simple Search Bar -->
+    <div class="navbar-form">
+        <div class="form-group">
+            <div class="input-group">
+                <!-- Search Input -->
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" name="search" placeholder="search for..." ng-model="searchKeyword">
+            </div>
+            <!-- Serach Button -->
+
+            <button type="button" ng-click="assignments.search(searchKeyword, number);" class="btn btn-primary">Search
+            </button>
+        </div>
+
+
+        <!-- Clear Button -->
+        <button type="button" ng-click="assignments.clear();" class="btn btn-default">Clear</button>
+
+    </div>
+    <div class="showmore">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">Results to display:</span>
+                <input type="number" class="form-control" ng-model="numberOfResults" ng-change="changedValue(numberOfResults)">
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Simple Search Bar /-->
+
+    <div class="headerComment" ng-show="searchFilter !== undefined">
+        Total results: {{ (management.users | filter: searchFilter).length }}
+        Showing:{{( assignments.assignments | filter: searchFilter | limitTo: assignments.limit).length }}
+
+    </div>
+
+
+    <br>
+    <hr class="hr2"/>
+
+    <div class="row row-no-padding">
+        <div class="col-lg-8">
+            <div class="background-8 text-center"  style ="font-size : 30px;">
+                displaying relevant assignments
+            </div>
+        </div>
+        <div class="col-lg-4 background-6 text-center" ng-show="main.isLoggedIn && main.authorized">
+                <a style ="font-size : 30px;" href="/add_assignment"> <i class="fa  fa-plus-circle"></i> Add Assignment </a>
+        </div>
+
+
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="table-responsive">
+            <table id="tr-animation" class="table table-bordered table-inverse table-hover ">
+                <thead class="thead-inverse thead-purple ">
+                <tr>
+                    <th>#</th>
+                    <th>Assignment</th>
+                    <th>Created by</th>
+                    <th>Pass Rate</th>
+                    <th>Due date</th>
+                    <th>Examiners</th>
+                    <th>Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="assignment in assignments.assignments | filter: searchFilter | limitTo : management.limit  track by $index">
+                    <td >
+                        #{{$index +1 }}
+                    </td>
+
+                        <!--display assignment name-->
+                    <td >{{assignment.assignment_name}}</td>
+
+                    <!--display assignment date created and by whom-->
+                    <td> <span  style="color:#6e75c5" >{{assignment.created_by}} </span> <br>
+                        {{assignment.date_created | date:'medium'}}
+                    </td>
+
+                    <!--display the percent of qualified users (who passed the assignment)-->
+                    <td class="text-center"> <span  style="color:#c53943; font-size :30px;" > {{assignment.progress_percentage}}% </span> <br>
+                        pass
+
+                    </td>
+
+
+                    <td>  <span  style="color:#6e75c5" >this week </span> <br>
+                        {{assignment.due_date | date:'medium'}}
+                    </td>
+                    <td>
+                            <select class="selectpicker form-control background-3  btn-block">
+                                <option ng-repeat="examiner in assignment.examiners track by $index">
+                                    {{examiner}}
+                                </option>
+                            </select>
+
+                            <button class="btn btn-primary btn-block">
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                &nbsp; contact examiner
+                            </button>
+                    </td>
+                    <td>
+                        <div class="col-lg-6">
+                            <a href="/editAssignment/{{assignment._id}}">
+                                <button type="button" class="btn btn-primary btn-block ">Edit
+                                </button>
+                            </a>
+                        </div>
+                        <!--anytime we create an assignment we can go to edit page using that id.-->
+
+                        <div class="col-lg-6">
+
+                            <button type="button"
+                                    class="btn btn-danger btn-block" +
+                                    ng-click="assignments.showConfirm(assignment.assignment_name);">
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

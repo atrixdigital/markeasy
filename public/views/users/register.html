@@ -1,0 +1,74 @@
+<div class="jumbotron ">
+
+    <div class="row">
+            <div class="headerStyle ">
+                <img src="../img/register.png"/>
+
+                User Registration
+            </div>
+    </div>
+
+
+    <form name="regForm" ng-submit="register.regUser(regData)" novalidate>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Name</label>
+            <input type="text" class="form-control" placeholder="Name" name="name" ng-model="register.regData.name"
+                   ng-minlength="3" ng-maxlength="25" required>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Unique Username</label>
+            <input type="text" class="form-control" placeholder="Username" name="username"
+                   ng-model="register.regData.username"  ng-minlength="3" ng-maxlength="25" required>
+
+        </div>
+        <div class="form-group row">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email" name="email" ng-model="register.regData.email" ng-minlength="3" ng-maxlength="25" required>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Choose Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password"
+                   ng-model="register.regData.password" ng-minlength="3" ng-maxlength="25" required>
+
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Retype Password</label>
+            <input type="password" class="form-control" placeholder="confirm password" name="password_confirm"
+                   ng-model="register.regData.password_confirm" ng-minlength="3" ng-maxlength="25" required>
+
+        </div>
+        <div class="form-group row">
+            <!--<label for="example-color-input" class="col-2 col-form-label">Color</label>-->
+            <!--<div class="col-10">-->
+                <!--<input class="form-control" type="color" value="#563d7c" id="example-color-input">-->
+            <!--</div>-->
+            <br>
+            <div class="row text-center" >
+                <button type="submit" class="btn btn-lg btn-success">Submit</button>
+
+            </div>
+
+
+        </div>
+
+
+
+    </form>
+
+
+    <div class="jumbotron text-center" ng-show="register.loading">
+    <span class="glyphicon glyphicon-repeat-spinner">
+        Loading...
+    </span>
+    </div>
+    <div class="row show-hide-message" ng-show="register.successMsg">
+        <div class="alert alert-success"> {{ register.successMsg }}</div>
+    </div>
+    <br>
+    <div class="row show-hide-message" ng-show="register.errorMsg">
+        <div class="alert alert-danger">{{ register.errorMsg }}</div>
+    </div>
+
+</div>

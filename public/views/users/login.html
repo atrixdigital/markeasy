@@ -1,0 +1,53 @@
+<div class="jumbotron">
+    <div class="headerStyle">
+        <img src="../img/login.png"/>
+        User Login
+    </div>
+    <form ng-submit="main.doLogin(loginData)">
+        <label>Username</label>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="text" class="form-control" name="username" placeholder="Username"
+                   ng-model="main.loginData.username">
+
+        </div>
+        <label>Password</label>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" class="form-control" name="password" placeholder="Password"
+                   ng-model="main.loginData.password">
+
+        </div>
+        <br>
+        <button type="submit" class="btn btn-default btn-primary">Submit</button>
+        &nbsp
+        <button type="button" class="btn btn-success" ng-click="main.facebook()"> <i class="fa fa-facebook" aria-hidden="true"></i>
+            Facebook</button>
+    </form>
+</div>
+
+<!--show loading icon spinning-->
+<div class="jumbotron text-center" ng-show="main.loading">
+    <span class="glyphicon glyphicon-repeat spinner"> </span>
+        <p> Loading... </p>
+</div>
+<br>
+
+<!--show success message when needed-->
+<div class="row show-hide-message" ng-show="main.successMsg">
+    <div class="alert alert-success"> {{ main.successMsg }}</div>
+</div>
+<br>
+
+<!--show error message when needed-->
+
+<div class="row show-hide-message" ng-show="main.errorMsg">
+    <div class="alert alert-danger">{{ main.errorMsg }}</div>
+</div>
+<br>
+
+<!--display the facebook alert if needed-->
+<div class="row show-hide-message" ng-show="facebook.errorMsg">
+    <div class="alert alert-danger">{{ facebook.errorMsg }}</div>
+</div>

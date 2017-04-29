@@ -1,0 +1,139 @@
+<div class="jumbotron">
+    <div class="headerStyle">
+        <img src="../../img/users.png"/>
+        Users Management
+
+    </div>
+    <div class="headerComment">
+        CRUD THE HELL OUT!
+    </div>
+    <br>
+
+    <button type="button" class="btn btn-warning" ng-click="management.showAll();">Show All</button>
+
+    <div class="showmore">
+        <div class="col-lg-3">
+            <div class="input-group">
+                <span class="input-group-addon">Results to display:</span>
+                <input type="number" class="form-control" ng-model="numberOfResults"
+                       ng-change="changedValue(numberOfResults)">
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="input-group">
+
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Simple Search Bar -->
+    <div class="navbar-form">
+        <div class="form-group">
+            <div class="input-group">
+                <!-- Search Input -->
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" name="search" placeholder="search for..."
+                       ng-model="searchKeyword">
+            </div>
+            <!-- Serach Button -->
+
+            <button type="button" ng-click="management.search(searchKeyword, number);" class="btn btn-primary">Search
+            </button>
+        </div>
+
+
+        <!-- Clear Button -->
+        <button type="button" ng-click="management.clear();" class="btn btn-default">Clear</button>
+
+    </div>
+    <!-- Simple Search Bar /-->
+
+    <div class="row show-hide-message" ng-show="management.showMoreError">
+        <div class="alert alert-danger">{{ management.showMoreError }}</div>
+    </div>
+
+
+    <!-- Total Search Results -->
+    <!-- Results Being Shown -->
+
+    <div class="headerComment" ng-show="searchFilter !== undefined">
+        Total results: {{ (management.users | filter: searchFilter).length }}
+        Showing:{{( management.users | filter: searchFilter | limitTo: management.limit).length }}
+
+    </div>
+
+    <br>
+    <br>
+
+    <div class="row row-no-padding">
+        <div class="col-lg-8">
+            <div class="background-8 text-center" style="font-size : 30px;">
+                displaying {{management.limit}} of the users in the database
+            </div>
+        </div>
+        <div class="col-lg-4 pull-right background-6 text-center" ng-show="main.isLoggedIn && main.authorized">
+
+            <a style="font-size : 30px;" href="/search"> <i class="fa fa fa-search"></i> Advanced search </a>
+        </div>
+
+
+    </div>
+
+    <div class="panel panel-default">
+        <div class="table-responsive">
+            <table id="tr-animation" class="table table-bordered table-inverse table-hover ">
+                <thead class="thead-inverse thead-purple  ">
+                <tr>
+                    <th>#</th>
+                    <th>UserName</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Manage</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="person in management.users   | filter: searchFilter | limitTo : management.limit  track by $index"
+                    class="text-center">
+                    <td class="text-center"> {{$index +1 }}</td>
+                    <td>{{person.username}}</td>
+                    <td>{{person.name}}</td>
+                    <td>{{person.email}}</td>
+
+                    <td>
+                        <a href="/edit/{{person._id}}" ng-show="management.editAccess">
+                            <button type="button" class="btn btn-primary btn-block">
+                                Edit
+                                <i class="fa fa-lg fa-arrow-circle-right"></i>
+
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!--show loading icon spinning-->
+    <div class="jumbotron text-center" ng-show="management.loading">
+        <span class="glyphicon glyphicon-repeat spinner"> </span>
+        <p> Loading... </p>
+    </div>
+    <br>
+
+    <!--show success message when needed-->
+    <div class="row show-hide-message" ng-show="management.successMsg">
+        <div class="alert alert-success"> {{ management.successMsg }}</div>
+    </div>
+    <br>
+
+    <!--show error message when needed-->
+    <div class="row show-hide-message" ng-show="management.errorMsg">
+        <div class="alert alert-danger">{{ management.errorMsg }}</div>
+    </div>
+    <br>
+
+    <br>
+</div>

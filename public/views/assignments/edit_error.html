@@ -1,0 +1,201 @@
+<div class="jumbotron" layout-margin>
+    <!--the top of the page will contain the name of the assignment and a relevant icon-->
+    <div class="row">
+        <div class="headerStyleLight">
+            <img src="../../img/error.png"/>
+                Edit Error
+            <span></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hr2"></div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-lg-8 background-blue-light">
+
+            <!--Assignment presentation Start-->
+            <div class="text-center">
+                <h2>{{error_name}}</h2> <br>
+            </div>
+
+            <div class="headerComment" style="display: inline-block;   min-width: 160px;"> Error:</div>
+            <div class="bigText"> {{error_name}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.namePhase();">
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Description:</div>
+            <div class="bigText"> {{error_description}}</div>
+            <button class="btn btn-danger pull-right" ng-click="edit.descriptionPhase();">
+                <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+            </button>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Created By:</div>
+            <div class="bigText"> {{created_by}}</div>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Created at:</div>
+            <div class="bigText"> {{date_created | date:'medium'}}</div>
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Last Edited:</div>
+            <div class="bigText"> {{last_edited | date:'medium'}}</div>
+
+            <hr class="hr2"/>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="headerComment" style="display: inline-block; min-width: 160px;"> Grade Impact:</div>
+                    <div class="bigText"> {{grade_impact}} </div>
+                    <button class="btn btn-danger pull-right" ng-click="edit.impactPhase();">
+                        <i class="fa fa-lg fa-pencil-square-o " aria-hidden="true"></i>
+                    </button>
+
+                </div>
+
+                <div class="col-lg-8 ">
+                    <div class="headerComment pull-right" style="display: inline-block; min-width: 160px;"> Impactmeter: <img src="../../img/small_mistake.png"/> {{scope_meter}}</div>
+                </div>
+            </div>
+
+
+
+            <hr class="hr2"/>
+
+            <div class="headerComment" style="display: inline-block; min-width: 160px;"> Times Occurred:</div>
+                <div class="bigText">
+                    3 times.
+                </div>
+            <hr class="hr2"/>
+
+            <div class="row">
+                <div class="col-lg-2">
+                        <!--just some space-->
+                </div>
+                <div class="col-lg-8">
+                    <!--show success message when needed-->
+                    <div class="row show-hide-message" ng-show="edit.successMsg">
+                        <div class="alert alert-success">
+                            <img src="../../img/check-box-standard-error.png"/>
+                            {{ edit.successMsg }}</div>
+                    </div>
+                    <br>
+
+                    <!--show error message when needed-->
+                    <div class="row show-hide-message" ng-show="edit.errorMsg">
+                        <div class="alert alert-danger">{{ edit.errorMsg }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <!--just some space-->
+                </div>
+            </div>
+
+            <br>
+
+<div class="row">
+    <span class="bigText pull-right"> <a class="pull-right" href="/editAssignment/{{parent_assignment}}">Go back to assignment<i class="fa fa-arrow-circle-right"></i></a> </span>
+</div>
+
+
+
+
+
+
+
+        </div>
+        <div class="col-lg-4 background-editing-box sample-show-hide" ng-show="edit.showEditingWindow">
+            <!--start of editing capabilities box-->
+            <div class="text-center">
+                <img src="../../img/writing.png" style="max-width: 150px; padding:10px;"/>
+            </div>
+
+            <div class="row">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-click="edit.namePhase();" ng-class="nameTab"><a href="#">Name</a></li>
+                    <li role="presentation" ng-click="edit.descriptionPhase();" ng-class="descriptionTab"><a href="#">Description</a></li>
+                    <li role="presentation" ng-click="edit.impactPhase();" ng-class="impactTab"><a href="#">Impact</a></li>
+                    </li>
+                </ul>
+
+            </div>
+
+
+            <!--phase one: edit the name of the error-->
+            <form name="edit.nameForm" ng-show="edit.phase1"
+                  ng-submit="edit.updateName(newName, edit.nameForm.name.$valid)" novalidate>
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" style="border-top-left-radius: 0px; " >enter new name:</div>
+                    <input type="text" class="form-control" placeholder="Name" name="name" ng-model="newName"
+                           ng-minlength="3" ng-maxlength="25" required>
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+
+            <!--phase two: change description of an error-->
+
+            <form name="edit.descriptionForm" ng-show="edit.phase2" ng-submit="edit.descriptionPhase(newDescription)">
+                <div class="row">
+                    <div class="headerStyleLight text-center" >  Change Description <br>  </div>
+                    <div class="hr2"></div>
+                    <div class="text-center">
+                        <div class="bigText">
+                            Enter New Description:
+                        </div>
+                    </div>
+                    <textarea class="form-control feedback-input" rows="5"
+                              ng-model="newDescription" name="desc"></textarea>
+
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+            <!--phase three: change error impact-->
+            <form name="edit.impactForm" ng-show="edit.phase3"
+                  ng-submit="edit.updateImpact(newImpact, edit.impactForm.desc.$valid)" novalidate>
+                <div class="form-group row">
+                    <div class="headerStyleLight text-center" style="border-top-left-radius: 0px;" >Enter New Impact:</div>
+
+                    <input type="number" class="form-control feedback-input" rows="5"
+                              ng-model="newImpact" name="desc">
+                </div>
+                <div class="row">
+                    <button ng-disabled="edit.disabled" class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+
+
+
+
+
+            <!--end of editing capabilities box-->
+        </div>
+
+
+        <div class="col-lg-4  text-center" ng-show="!edit.showEditingWindow" >
+            <div class="headerStyleLight"> Standard Error Info</div>
+
+            <img src="../../img/error.png" style="max-width: 256px;"/>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>

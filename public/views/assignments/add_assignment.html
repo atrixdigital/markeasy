@@ -1,0 +1,208 @@
+<div class="jumbotron">
+
+    <div class="headerStyle">
+        <img src="../../img/add.png"/>
+        Add Assignment
+
+
+    </div>
+    <div class="clockDisplay">its now {{ today | date : "h:mm" }}
+    </div>
+
+    <form>
+        <br>
+
+
+        <div class="form-group">
+
+            <br>
+            <div class="row">
+
+                    <div class="headerStyleLight">
+                        <img src="../img/assignments.png"/>
+                        Assignment Name
+                    </div>
+                    <input type="text" class="form-control feedback-input" name="assignment_name"
+                           placeholder="Assignment name"
+                           ng-model="addAssignment.assignmentData.assignment_name"
+                            style="font-size:25px; height:100px;">
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                    <div class="headerStyleLight">
+                        <img src="../img/calendar.png"/>
+                        Due Date
+                    </div>
+            </div>
+            <div class="row">
+
+                <div class="feedback-input"
+                     style="border: 1px dashed rgba(150,88,255,0.25);">
+                    <md-input-container>
+                        <md-datepicker ng-model="addAssignment.assignmentData.submissionDate"></md-datepicker>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                    <div class="headerStyleLight">
+                        <img src="../img/description.png"/>
+                        Description
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="form-group">
+                        <textarea class="form-control  feedback-input" rows="5"
+                                  ng-model="addAssignment.assignmentData.submissionDescription"></textarea>
+                    </div>
+                <!--<div class="col-lg-4 background-2 text-center" style="border: 1px dashed rgba(150,88,255,0.25); margin-left: 15px; width:31%">-->
+                <!--<md-input-container>-->
+                <!--<md-datepicker ng-model="addAssignment.assignmentData.submissionDate"></md-datepicker>-->
+                <!--</md-input-container>-->
+                <!--</div>-->
+            </div>
+
+            <div class="row">
+
+            </div>
+            <hr class="hr2"/>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+
+                    <div class="headerStyleLight">
+                        <img src="../img/examiner.png"/>
+                        Add Examiners
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <br>
+                <div class="col-lg-4 ">
+                    <select class="selectpicker form-control background-4" ng-model="selectedExaminer"
+                            ng-change="changedValue(selectedExaminer)">
+                        <option ng-repeat="examiner in availableExaminers">
+                            {{examiner}}
+                        </option>
+                    </select>
+                </div>
+                <br>
+            </div>
+            <br>
+            <div class="row">
+
+                <div class="col-lg-4 ">
+                    <button class="btn btn btn-success" ng-click="addExaminer()">ADD EXAMINER
+                    </button>
+                    <button class="btn btn-primary btn-assignment" ng-click="clearExaminers()">CLEAR EXAMINERS
+                    </button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-4  ">
+                    <br>
+                    <div class="headerComment background-4 ">examiners list :</div>
+                    <div class="background-3">
+                        <div ng-repeat="examiner in examiners" style="float:left">
+                            &nbsp;{{examiner}} {{$last ? '' : ' , '}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr class="hr2"/>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+
+                    <div class="headerStyleLight">
+                        <img src="../img/warning.png"/>
+                        Define Standard Errors
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <button class="btn btn-success" ng-click="showAdvanced($event)">
+                        ADD ERROR
+                    </button>
+                    <button class="btn btn-primary btn-assignment" ng-click="clearErrors()">
+                        CLEAR ERRORS
+                    </button>
+
+                </div>
+            </div>
+
+
+            <span ng-if="!errors.length" class="animate-if">
+                     No errors defined yet. Add more by clicking 'ADD ERROR' button.
+                    </span>
+
+            <span ng-if="errors.length" class="animate-if">
+                    <span style="color:#553680"> add more errors by clicking 'add error' </span>
+                    <br>
+                    <div class="headerComment">errors list ({{errors.length}})</div>
+                    </span>
+
+            <div class="col-lg-4  ">
+
+                <div ng-repeat="error in errors">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class=" background-5" is-open="status.open">
+                            <uib-accordion-heading>
+                                &nbsp;{{error.name}} <i class="pull-right glyphicon"
+                                                        ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                            </uib-accordion-heading>
+                            reason: <br>
+                            {{error.description}}
+                            <br>
+                            grade impact is : {{error.gradeImpact}}
+                        </div>
+                    </uib-accordion>
+                </div>
+            </div>
+
+            <br>
+
+
+            <br>
+
+            <hr class="hr2"/>
+            <div class="col-lg-12  ">
+                <button type="submit" class="btn btn-lg btn-primary"
+                        ng-click="addAssignment.addAssignment(assignmentData)">
+                    Create Assignment
+                </button>
+            </div>
+            <br>
+        </div>
+    </form>
+    <!--show loading icon spinning-->
+    <div ng-show="addAssignment.loading">
+        <span class="glyphicon glyphicon-repeat spinner"> </span>
+        <p> Loading... </p>
+    </div>
+    <br>
+
+    <!--show success message when needed-->
+    <div class="row show-hide-message" ng-show="addAssignment.successMsg">
+        <div class="alert alert-success"> {{ addAssignment.successMsg }}</div>
+    </div>
+    <br>
+
+    <!--show error message when needed-->
+    <div class="row show-hide-message" ng-show="addAssignment.errorMsg">
+        <div class="alert alert-danger">{{ addAssignment.errorMsg }}</div>
+    </div>
+
+
+</div>

@@ -1,0 +1,414 @@
+<div class="jumbotron">
+
+
+    <div class="headerStyle">
+        <img src="../../img/userprofile.png"/>
+        {{main.username}} <
+
+        <span>{{profile.fullname}}</span> > site {{profile.role}}
+
+    </div>
+
+    <hr>
+<div class="headerComment">
+    its now {{ today | date : fullDate }} &emsp;|&emsp; logged in as {{main.useremail}}
+
+</div>
+
+    <hr class="hr2"/>
+
+
+<div ng-show="main.isLoggedIn && main.authorized">
+
+    <div class="headerStyleLight">
+        <img src="../img/dash.png"/>
+        Your Statistics
+    </div>
+    <br>
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="panel background-3">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-line-chart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">67%</div>
+                            <div>Work completed!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel background-3">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">2</div>
+                            <div>Open Assignments</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel background-3">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-paper-plane-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">22</div>
+                            <div>New Submissions!</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel background-3">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-chain-broken fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">13</div>
+                            <div>New Errors Added</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <hr class="hr2"/>
+
+</div>
+
+    <div class="headerStyleLight">
+        <img src="../img/assignments.png"/>
+        Your Assignments
+    </div>
+    scope status : {{status}}
+
+    <br>
+
+<div class="row" ng-repeat="assignment in profile.assignments  track by $index">
+    <div class="col-lg-12">
+        <div class="panel ">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <i class="fa fa-tasks"></i>
+                        {{assignment.assignment_name}}
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        {{assignment.date_created | date:'medium'}}
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+
+                    <span class="pull-left">{{assignment.description}} </span>
+
+                    <span class="pull-right"> <a class="pull-right" href="/editAssignment/{{assignment._id}}">Edit Assignment <i class="fa fa-arrow-circle-right"></i></a>
+
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+    <br> <a href="#">>> To assignments page</a>
+
+    <hr class="hr2"/>
+
+
+    <div  ng-show="main.isLoggedIn && main.authorized">
+
+    <div class="headerStyleLight">
+        <img src="../img/lastEdits.png"/>
+        Last Edits
+    </div>
+    <br>
+    <div class="row">
+
+
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <i class="fa fa-chain-broken"></i>
+                            Added new standard error
+                        </div>
+                        <div class="col-xs-4 pull-right">
+                            11/02/17
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left"> Added new standard error to "Test2" Assignment : <br> wrong indentation</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel ">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <i class="fa fa-chain-broken"></i>
+                            Added new standard error
+                        </div>
+                        <div class="col-xs-4 pull-right">
+                            11/02/17
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Added new standard error to "Test1" Assignment: <br> you are a noob</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel background-4">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <i class="fa fa-support"></i>
+                            Added new assignment
+                        </div>
+                        <div class="col-xs-4 pull-right">
+                            11/02/17
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">New assignment : resign from the college ! </span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <hr class="hr2"/>
+
+
+    <div class="headerStyleLight">
+        <img src="../img/comments.png"/>
+        Last Comments
+    </div>
+<br>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <i class="fa fa-comments"></i>
+                            You commented on submission 12331
+                        </div>
+
+                        <div class="col-xs-2 pull-right">
+                            Feb 7, 2017 12:34:56 PM
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">I took down the full amount because I am sure you copied from your friend</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel ">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <i class="fa fa-comments"></i>
+                            You commented on submission 22331
+                        </div>
+
+                        <div class="col-lg-2 pull-right">
+                            Feb 7, 2017 12:22:33 PM
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Please don't blame me for being a total ***hole</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="hr2"/>
+
+    <div class="headerStyleLight">
+        <img src="../img/messages.png"/>
+        Last Messages <br>
+
+    </div>
+<br>
+        you have 3 pending messages in your inbox <a href="#"> <br><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp Go To Inbox</a>
+<br><br>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel background-5">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <i class="fa fa-comments"></i>
+                            please check my test again!
+                            &emsp;
+                            <i class="fa fa-user"></i>
+                            from: <span style="color:rebeccapurple">mantrastic</span>
+                        </div>
+
+                        <div class="col-xs-2 pull-right">
+                            Feb 6, 2017 10:21:34 PM
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">I think you made a grave mistake when checking my test! please check it again! please I am begging you!</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel background-5">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <i class="fa fa-comments"></i>
+                            Hedva-2 submission due date &emsp;
+
+                            <i class="fa fa-user"></i>
+                            from: <span style="color:rebeccapurple">nirbm</span>
+                        </div>
+
+                        <div class="col-xs-2 pull-right">
+                            Feb 6, 2017 10:21:34 PM
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Hi there, its Nir, I have a wedding in sunday and I wondered if you could postpone the submission just for me?</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel background-5">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <i class="fa fa-comments"></i>
+                                    My complements. &emsp;
+                            <i class="fa fa-user"></i>
+                            from: <span style="color:rebeccapurple">DanNirel</span>
+                        </div>
+
+                        <div class="col-xs-2 pull-right">
+                            Feb 6, 2017 10:21:34 PM
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left"> this is truly a great thing you accomplished here! amazing site! so sleek and comfortable ! 10/10</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="hr2"/>
+
+    </div>
+
+
+</div>
