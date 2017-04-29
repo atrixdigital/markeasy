@@ -40,8 +40,11 @@ angular.module('submissionController', ['userServices', 'assignmentServices' ,'n
 
 
 $scope.loadNewFile = function(url){
-   $scope.pdfUrl = 'test.pdf';
+   $scope.pdfUrl = '../test.pdf';
 }
+
+
+
     Assignment.getAssignment($routeParams.id).then(function (data) {
         if(data.data.success) {
             console.log('great success!!');
